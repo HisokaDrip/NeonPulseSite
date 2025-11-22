@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEON PULSE | The Ultimate Audio Experience</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* --- FONTS & RESET --- */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+
+        :root {
+            --primary: #00f3ff;
+            --secondary: #ff00ff;
+            --bg: #050505;
+            --panel: rgba(20, 20, 20, 0.6);
+            --text: #e0e0e0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- ANIMATED BACKGROUND --- */
+        #canvas-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; opacity: 0.4; pointer-events: none;
+        }
+
+        /* --- SCROLL BAR --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
+
+        /* --- NAV --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 25px 5%; position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+        }
+        .logo {
+            font-family: 'Orbitron', sans-serif; font-size: 28px; font-weight: 900;
+            color: white; letter-spacing: 2px; text-shadow: 0 0 10px var(--primary);
+        }
+        .logo span { color: var(--primary); }
+        .nav-btn {
+            color: #fff; text-decoration: none; margin-left: 30px; font-weight: 700;
+            text-transform: uppercase; font-size: 14px; letter-spacing: 1px;
+            transition: 0.3s; cursor: pointer; position: relative;
+        }
+        .nav-btn::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
+            background: var(--secondary); transition: 0.3s;
+        }
+        .nav-btn:hover { color: var(--secondary); text-shadow: 0 0 8px var(--secondary); }
+        .nav-btn:hover::after { width: 100%; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 0 20px; position: relative;
+        }
+
+        .glitch-wrapper { display: inline-block; position: relative; }
+        h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 5rem; font-weight: 900;
+            line-height: 1; margin-bottom: 10px; color: white;
+            text-shadow: 2px 2px 0px var(--secondary), -2px -2px 0px var(--primary);
+            animation: shake 3s infinite;
+        }
+
+        .subtitle {
+            font-size: 1.5rem; color: var(--primary); margin-bottom: 50px;
+            letter-spacing: 4px; text-transform: uppercase;
+        }
+
+        /* --- 3D TILT CARD --- */
+        .download-container { perspective: 1000px; }
+        .download-card {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--primary);
+            padding: 40px 60px; border-radius: 15px;
+            box-shadow: 0 0 50px rgba(0, 243, 255, 0.1);
+            transform-style: preserve-3d; transition: transform 0.1s;
+            backdrop-filter: blur(5px);
+        }
+        
+        .btn-main {
+            display: inline-flex; align-items: center; gap: 15px;
+            padding: 15px 40px; font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: bold;
+            color: #000; background: var(--primary); border: none; border-radius: 5px;
+            text-decoration: none; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 0 20px var(--primary);
+        }
+        .btn-main:hover {
+            background: white; box-shadow: 0 0 40px white; transform: scale(1.05);
+        }
+        
+        .version { margin-top: 20px; font-family: monospace; color: #666; }
+
+        /* --- FEATURES GRID --- */
+        .section { padding: 100px 10%; position: relative; }
+        .section-title {
+            font-family: 'Orbitron'; font-size: 3rem; text-align: center; margin-bottom: 80px;
+            color: white; text-transform: uppercase;
+        }
+        .section-title span { color: var(--secondary); }
+
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;
+        }
+
+        .card {
+            background: var(--panel); border: 1px solid #333; padding: 40px; border-radius: 12px;
+            transition: 0.4s; position: relative; overflow: hidden;
+            opacity: 0; transform: translateY(50px); /* For Scroll Reveal */
+        }
+        
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0); transform-origin: left; transition: 0.4s;
+        }
+
+        .card:hover { transform: translateY(-10px); border-color: #555; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .card:hover::before { transform: scaleX(1); }
+
+        .icon-box {
+            font-size: 3rem; color: var(--primary); margin-bottom: 25px;
+        }
+        .card h3 { font-family: 'Orbitron'; font-size: 1.5rem; margin-bottom: 15px; color: white; }
+        .card p { color: #aaa; line-height: 1.6; font-size: 1.1rem; }
+
+        /* --- SUPPORT SECTION --- */
+        .support-box {
+            text-align: center; background: linear-gradient(45deg, rgba(0,0,0,0.8), rgba(20,20,20,0.9));
+            border: 1px solid var(--secondary); padding: 60px; border-radius: 20px;
+            max-width: 800px; margin: 0 auto; position: relative;
+        }
+        .support-box::after {
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--primary));
+            z-index: -1; border-radius: 22px; background-size: 400%;
+            animation: glowing 20s linear infinite; opacity: 0.5;
+        }
+
+        .email-btn {
+            display: inline-block; margin-top: 30px;
+            font-size: 1.5rem; color: var(--secondary); text-decoration: none;
+            border: 2px solid var(--secondary); padding: 15px 30px; border-radius: 50px;
+            transition: 0.3s; cursor: pointer; font-family: 'Orbitron';
+        }
+        .email-btn:hover {
+            background: var(--secondary); color: white; box-shadow: 0 0 30px var(--secondary);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center; padding: 50px 0; border-top: 1px solid #222; background: #020202;
+            margin-top: 100px;
+        }
+        .footer-text { color: #555; font-size: 0.9rem; letter-spacing: 2px; }
+        .mazy { color: var(--primary); font-weight: 900; font-family: 'Orbitron'; text-transform: uppercase; }
+
+        /* --- ANIMATIONS --- */
+        @keyframes glowing { 0% { background-position: 0 0; } 50% { background-position: 400% 0; } 100% { background-position: 0 0; } }
+        @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 10% { transform: translate(-1px, -2px) rotate(-1deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 30% { transform: translate(3px, 2px) rotate(0deg); } 40% { transform: translate(1px, -1px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 70% { transform: translate(3px, 1px) rotate(-1deg); } 80% { transform: translate(-1px, -1px) rotate(1deg); } 90% { transform: translate(1px, 2px) rotate(0deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
+        
+        .visible { opacity: 1; transform: translateY(0); }
+
+        @media(max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .grid { grid-template-columns: 1fr; }
+            nav { padding: 20px; }
+            .nav-btn { display: none; } /* Hide nav links on mobile for cleaner look */
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-bg"></canvas>
+
+    <nav>
+        <div class="logo">NEON<span>PULSE</span></div>
+        <div>
+            <a href="#features" class="nav-btn">Features</a>
+            <a href="#support" class="nav-btn">Support</a>
+            <a href="https://github.com/" class="nav-btn">GitHub</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="glitch-wrapper">
+            <h1>NEON PULSE</h1>
+        </div>
+        <div class="subtitle">The Future of Desktop Audio</div>
+
+        <div class="download-container" id="tilt-card">
+            <div class="download-card">
+                <div style="margin-bottom: 20px; font-family: 'Orbitron'; color: #fff; font-size: 1.2rem;">
+                    READY FOR DEPLOYMENT
+                </div>
+                <!-- DOWNLOAD LINK -->
+                <a href="NeonPulse.zip" class="btn-main" download>
+                    <i class="fas fa-download"></i> DOWNLOAD .EXE
+                </a>
+                <div class="version">v1.0 • Windows 64-bit • Portable</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="section">
+        <div class="section-title">SYSTEM <span>CAPABILITIES</span></div>
+        
+        <div class="grid">
+            <div class="card scroll-reveal">
+                <div class="icon-box"><i class="fas fa-shield-alt"></i></div>
+                <h3>Ad-Block Engine</h3>
+                <p>Neon Pulse bypasses ad networks entirely. No interruptions. No waiting. Just pure, unadulterated audio streaming directly to your ears.</p>
+            </div>
+            <div class="card scroll-reveal">
+                <div class="icon-box"><i class="fas fa-bolt"></i></div>
+                <h3>Local Processing</h3>
+                <p>Runs 100% on your machine. Uses your own internet connection to prevent IP blocking and server lag. Maximum speed, zero latency.</p>
+            </div>
+            <div class="card scroll-reveal">
+                <div class="icon-box"><i class="fas fa-wave-square"></i></div>
+                <h3>Audio Visualizer</h3>
+                <p>Integrated FFT visualizer that reacts in real-time to your music. Watch the beat drop with our custom retro-wave graphics engine.</p>
+            </div>
+            <div class="card scroll-reveal">
+                <div class="icon-box"><i class="fas fa-server"></i></div>
+                <h3>No Database Required</h3>
+                <p>Your library is saved locally in JSON format. You own your data. Backup, transfer, or edit your playlists manually with ease.</p>
+            </div>
+            <div class="card scroll-reveal">
+                <div class="icon-box"><i class="fas fa-mask"></i></div>
+                <h3>Privacy First</h3>
+                <p>No login required. No tracking. No data selling. Neon Pulse is designed for anonymity and freedom.</p>
+            </div>
+            <div class="card scroll-reveal">
+                <div class="icon-box"><i class="fas fa-file-audio"></i></div>
+                <h3>High Fidelity</h3>
+                <p>Streams high-quality M4A audio directly from source. Experience crystal clear sound depth optimized for desktop speakers.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="support" class="section">
+        <div class="support-box scroll-reveal">
+            <h2 style="font-family:'Orbitron'; font-size:2.5rem; margin-bottom:20px; color:white">SUPPORT CHANNEL</h2>
+            <p style="color:#aaa; font-size:1.2rem">Encountered a bug? Have a feature request? Contact the developer directly.</p>
+            
+            <!-- UPDATE EMAIL HERE -->
+            <a href="mailto:theimpostertube@gmail.com" class="email-btn">
+                <i class="fas fa-paper-plane"></i> CONTACT MAZY
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-text">
+            &copy; 2025 NEON PULSE PROJECT. ALL RIGHTS RESERVED.<br><br>
+            FORGED IN CODE BY <span class="mazy">MAZY</span>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. PARTICLE BACKGROUND SYSTEM ---
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.color = Math.random() > 0.5 ? '#00f3ff' : '#ff00ff';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.2) this.size -= 0.01;
+                if (this.size <= 0.2) {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = 2;
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            for (let i = 0; i < 100; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // --- 2. 3D TILT EFFECT FOR DOWNLOAD CARD ---
+        const card = document.querySelector('.download-card');
+        const container = document.querySelector('.download-container');
+
+        container.addEventListener('mousemove', (e) => {
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        container.addEventListener('mouseenter', (e) => {
+            card.style.transition = 'none';
+        });
+
+        container.addEventListener('mouseleave', (e) => {
+            card.style.transition = 'all 0.5s ease';
+            card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+        });
+
+        // --- 3. SCROLL REVEAL ANIMATION ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        });
+
+        const hiddenElements = document.querySelectorAll('.scroll-reveal');
+        hiddenElements.forEach((el) => observer.observe(el));
+
+    </script>
+</body>
+</html>
