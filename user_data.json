@@ -1,0 +1,96 @@
+{
+    "liked": [
+        {
+            "artist": "Alan Walker",
+            "duration": "3:33",
+            "id": "pIWaVJPl0-c",
+            "thumb": "https://lh3.googleusercontent.com/WbQvmYqxKwEbLPj5zSlYe5vrxipjJAaCxqB1cJxyzljnvIr9i4Ix9fyxK9h9BXq5a3jyvPdvGKI_2vWXnA=w120-h120-l90-rj",
+            "title": "Faded"
+        },
+        {
+            "artist": "NXCRE",
+            "duration": "4:14",
+            "id": "EwnxP6G7elA",
+            "thumb": "https://lh3.googleusercontent.com/g0Xx80FlzZqynP-oc5J6dPZ3JlSovasD0rrfxS8KtNf0UekyfUgBA8OYz4kSFYu7vBB2K_1-1Z9LoRjYyw=w120-h120-l90-rj",
+            "title": "Indigo"
+        },
+        {
+            "artist": "NXCRE",
+            "duration": "3:36",
+            "id": "tGD4WjRIpCw",
+            "thumb": "https://lh3.googleusercontent.com/BIbmQgg2VzMDTeeqC6I499a4o8T7lQ4er6yr3MztURvxwRzLxLaKJrmHQDBG92rv6dBLGfV-9WHHs1M=w120-h120-l90-rj",
+            "title": "Usurper"
+        },
+        {
+            "artist": "Mustafa Zahid",
+            "duration": "6:09",
+            "id": "eA7V16oogFA",
+            "thumb": "https://lh3.googleusercontent.com/dxV5Giyiw0e-0ct5Hsq_8RvxypA19fFo51GjPi1gRqhfAF9LmlfU7QKQPhB09iSXAr-DXx4BGcJLUqmT=w120-h120-l90-rj",
+            "title": "Zaroorat"
+        },
+        {
+            "artist": "Shreya Ghoshal",
+            "duration": "3:04",
+            "id": "HUlpRz6q33g",
+            "thumb": "https://lh3.googleusercontent.com/UWd3mZFFe4mSkQp7tkrD4TscClXmIbtVYMTbVPLkm25US4oPw0UIS8Dfa9WOB6SOxbQk4Rypvgwx_DzK=w120-h120-l90-rj",
+            "title": "Saiyaara Reprise - Female"
+        },
+        {
+            "artist": "Raj Barman",
+            "duration": "3:17",
+            "id": "TC0TGZSkFb0",
+            "thumb": "https://lh3.googleusercontent.com/vye0ACI0TW6pYSM6AWrLdGLoRPaPnQZBKcFrP_UG9uBkljAlDt-gfC18HaDhg8E0SYZnj06wHzjq0pM-VQ=w120-h120-l90-rj",
+            "title": "Abhi Mujh Mein Kahin (Rewind Version)"
+        },
+        {
+            "artist": "Sonu Nigam, Sayali Pankaj, & Chorus",
+            "duration": "2:52",
+            "id": "__jAiwMbU_0",
+            "thumb": "https://lh3.googleusercontent.com/h6rLKJ6C-KSN-4YOe4QY30OLW8ZZlPtFFEgStmcioGdWVw2654DfGfI_YtaMsczvUuWYP7v_ZwXx9JFo=w120-h120-l90-rj",
+            "title": "Tik Tik Vajate Dokyaat (Duet)"
+        },
+        {
+            "artist": "Egzod",
+            "duration": "3:44",
+            "id": "7CNHJLh8omE",
+            "thumb": "https://lh3.googleusercontent.com/Yq27hnGq8IsfHc9v-_k6p1x_d7vD4HYGK4WyJdLhZPPVtwSqrPh9qDBKDrMjxWAHZtWxDEeM9Vgqxtg=w544-h544-l90-rj",
+            "title": "Royalty"
+        }
+    ],
+    "playlists": {
+        "Dark Alt": [
+            {
+                "id": "EwnxP6G7elA",
+                "title": "Indigo",
+                "artist": "NXCRE",
+                "thumb": "https://lh3.googleusercontent.com/g0Xx80FlzZqynP-oc5J6dPZ3JlSovasD0rrfxS8KtNf0UekyfUgBA8OYz4kSFYu7vBB2K_1-1Z9LoRjYyw=w120-h120-l90-rj"
+            },
+            {
+                "id": "tGD4WjRIpCw",
+                "title": "Usurper",
+                "artist": "NXCRE",
+                "thumb": "https://lh3.googleusercontent.com/BIbmQgg2VzMDTeeqC6I499a4o8T7lQ4er6yr3MztURvxwRzLxLaKJrmHQDBG92rv6dBLGfV-9WHHs1M=w120-h120-l90-rj"
+            },
+            {
+                "id": "ljUtuoFt-8c",
+                "title": "Smells Like Teen Spirit",
+                "artist": "Nirvana",
+                "thumb": "https://lh3.googleusercontent.com/eyKiPBSqEu556sYTd_IyZhfxun5e_hatZ9tAyu8bnmVRgtbM3aW-SXUvhVX-d7s1oU0Yf3a38JOuYMZK5w=w120-h120-l90-rj"
+            }
+        ],
+        "Hindi": [
+            {
+                "id": "Z_Pr3Z9jz8I",
+                "title": "Humdard",
+                "artist": "Arijit Singh",
+                "thumb": "https://lh3.googleusercontent.com/dxV5Giyiw0e-0ct5Hsq_8RvxypA19fFo51GjPi1gRqhfAF9LmlfU7QKQPhB09iSXAr-DXx4BGcJLUqmT=w120-h120-l90-rj"
+            },
+            {
+                "id": "eA7V16oogFA",
+                "title": "Zaroorat",
+                "artist": "Mustafa Zahid",
+                "thumb": "https://lh3.googleusercontent.com/dxV5Giyiw0e-0ct5Hsq_8RvxypA19fFo51GjPi1gRqhfAF9LmlfU7QKQPhB09iSXAr-DXx4BGcJLUqmT=w120-h120-l90-rj"
+            }
+        ]
+    }
+}
